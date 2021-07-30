@@ -8,10 +8,10 @@ Research on achieving a secure way of managing day-1 and day-2 operations on sec
 ## Take it for a spin
 
 1. Install the requirements
-    - [kind]()
-    - [fluxcd]()
-    - [gpp]()
-    - [kubectl]()
+    - [kind](https://kind.sigs.k8s.io/)
+    - [fluxcd](https://fluxcd.io/docs/installation/)
+    - [gpp](https://gnupg.org/)
+    - [kubectl](https://kubernetes.io/docs/tasks/tools/)
 
 2. Fork and clone this repo into your machine.
 
