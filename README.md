@@ -20,7 +20,16 @@ Research on achieving a secure way of managing day-1 and day-2 operations on sec
 $ kind create cluster
 ```
 
-4. Bootstrap fluxcd bound to your repo:
+4. Create your public/private gpg keys
+
+5. Import key as secret:
+```shell
+gpg --export-secret-keys --armor "${KEY_FP}" |                                                   
+kubectl create secret generic sops-gpg \
+--namespace=flux-system \
+```
+
+6. Bootstrap fluxcd bound to your repo:
 ```shell
 $ export GITHUB_TOKEN=<my_pat>
 $ flux bootstrap github \            
@@ -30,9 +39,15 @@ $ flux bootstrap github \
   --personal
 ```
 
-5. Verify that fluxcd was installed:
+7. Verify that fluxcd was installed:
 ```shell
 $ kubectl get po -n flux-system
 ```
 
-6. Test it by adding a new secret or resource to the main branch and flux should provision it to your kind cluster.
+6. Test it by adding a new secret or resource to the main branch and flux should provision it and decrypt it to your kind cluster.
+eg.
+```shell
+sops --encrypt \                                                                                 
+--pgp {$KEY_FP} \                                                    
+--encrypted-suffix='data' --in-place luisgj/flux-sops/clusters/test/basic-auth.yaml
+```
